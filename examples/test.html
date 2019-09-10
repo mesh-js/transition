@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="https://unpkg.com/@mesh.js/core/dist/mesh.js"></script>
+  <script src="/js/mesh-transition.js"></script>
+</head>
+<body>
+  <canvas width="512" height="512"></canvas>
+  <script>
+    // console.log(meshjs);
+    const {Figure2D, Transition, Mesh2D, Renderer} = meshjs;
+
+    const f1 = new Figure2D();
+    f1.arc(200, 200, 100, 0, Math.PI * 2);
+
+    const f2 = new Figure2D();
+    f2.rect(100, 100, 200, 200);
+
+    const transition = new Transition(f1, f2);
+
+    const canvas = document.querySelector('canvas');
+    const renderer = new Renderer(canvas);
+
+    const T = 2000;
+    const startTime = Date.now();
+    const mesh = new Mesh2D({}, canvas);
+    mesh.setFill({color: [1, 0, 0, 1]});
+    function update() {
+      let p = (Date.now() - startTime) / T;
+      p = Math.min(p, 1.0);
+      mesh.contours = transition.progress(p).contours;
+      renderer.drawMeshes([mesh]);
+      if(p < 1.0) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    update();
+  </script>
+</body>
+</html>
