@@ -1,7 +1,7 @@
 {
   "name": "@mesh.js/transition",
   "version": "0.0.1",
-  "description": "The standard project template.",
+  "description": "Process figure transitions.",
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --env.server=examples --watch-poll",
